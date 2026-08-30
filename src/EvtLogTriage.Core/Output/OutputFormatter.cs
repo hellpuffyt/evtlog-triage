@@ -45,7 +45,7 @@ public static class OutputFormatter
         return sb.ToString().TrimEnd('\n', '\r');
     }
 
-    private static void AppendRow(StringBuilder sb, IReadOnlyList<string> cells, IReadOnlyList<int> widths)
+    private static void AppendRow(StringBuilder sb, IReadOnlyList<string> cells, int[] widths)
     {
         sb.AppendLine(string.Join("  ", cells.Select((c, i) => c.PadRight(widths[i]))));
     }
