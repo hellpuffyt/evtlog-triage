@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: "Test (${{ matrix.os }})"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: "Test: dotnet test"
+        run: dotnet test --configuration Release --no-restore --logger "console;verbosity=normal"
+
+  build:
+    name: Build (Release)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: "Format check: dotnet format --verify-no-changes"
+        run: dotnet format --verify-no-changes
+
+  smoke:
+    name: "Smoke test: CLI against sample log"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build CLI
+        run: dotnet build src/EvtLogTriage.Cli/EvtLogTriage.Cli.csproj --configuration Release --no-restore
+
+      - name: "Run CLI against samples/sample-security-events.json, expect findings"
+        run: |
+          set -e
+          OUTPUT=$(dotnet run --project src/EvtLogTriage.Cli -c Release --no-build -- samples/sample-security-events.json --format table --expected-admins nobody) || true
+          echo "$OUTPUT"
+          echo "$OUTPUT" | grep -q "BRUTE-FORCE" || (echo "expected BRUTE-FORCE finding not present" && exit 1)
+          echo "$OUTPUT" | grep -q "LOG-TAMPERING" || (echo "expected LOG-TAMPERING finding not present" && exit 1)
+
+      - name: "Run CLI against samples/sample-security-events.csv, expect findings"
+        run: |
+          set -e
+          OUTPUT=$(dotnet run --project src/EvtLogTriage.Cli -c Release --no-build -- samples/sample-security-events.csv --format json) || true
+          echo "$OUTPUT"
+          echo "$OUTPUT" | grep -q "BRUTE-FORCE" || (echo "expected BRUTE-FORCE finding not present in CSV run" && exit 1)

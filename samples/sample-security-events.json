@@ -1,0 +1,44 @@
+[
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:10:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:10:20Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:10:40Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:11:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:11:20Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:11:40Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:12:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:12:20Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:12:40Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T02:13:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+  { "EventId": 4624, "TimeCreated": "2026-01-05T02:13:30Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "victim.demo", "SourceAddress": "203.0.113.50", "Level": "Information" },
+
+  { "EventId": 4625, "TimeCreated": "2026-01-05T03:00:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "demo.user01", "SourceAddress": "198.51.100.20", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T03:00:30Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "demo.user02", "SourceAddress": "198.51.100.20", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T03:01:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "demo.user03", "SourceAddress": "198.51.100.20", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T03:01:30Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "demo.user04", "SourceAddress": "198.51.100.20", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T03:02:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "demo.user05", "SourceAddress": "198.51.100.20", "Level": "Information" },
+  { "EventId": 4625, "TimeCreated": "2026-01-05T03:02:30Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "demo.user06", "SourceAddress": "198.51.100.20", "Level": "Information" },
+
+  { "EventId": 4624, "TimeCreated": "2026-01-05T23:15:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "svc-report.demo", "SourceAddress": "192.0.2.10", "Level": "Information" },
+
+  { "EventId": 4672, "TimeCreated": "2026-01-06T10:05:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "contractor.temp", "SourceAddress": "192.0.2.11", "Level": "Information" },
+
+  { "EventId": 4720, "TimeCreated": "2026-01-06T14:00:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "DC01", "Account": "temp-svc99", "SourceAddress": "192.0.2.20", "Level": "Information" },
+  { "EventId": 4732, "TimeCreated": "2026-01-06T14:05:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "DC01", "Account": "temp-svc99", "SourceAddress": "192.0.2.20", "Level": "Information" },
+  { "EventId": 4726, "TimeCreated": "2026-01-06T15:30:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "DC01", "Account": "temp-svc99", "SourceAddress": "192.0.2.20", "Level": "Information" },
+
+  { "EventId": 1102, "TimeCreated": "2026-01-06T15:31:00Z", "Provider": "Microsoft-Windows-Eventlog", "Computer": "DC01", "Account": "temp-svc99", "SourceAddress": "192.0.2.20", "Level": "Information" },
+
+  { "EventId": 7045, "TimeCreated": "2026-01-06T15:35:00Z", "Provider": "Service Control Manager", "Computer": "DC01", "Account": "temp-svc99", "Level": "Information", "ServiceName": "WinUpdateHelperX", "ServiceFileName": "C:\\Users\\Public\\wuhelper.exe" },
+
+  { "EventId": 4648, "TimeCreated": "2026-01-06T16:00:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV02", "Account": "svc-migrator.demo", "SourceAddress": "192.0.2.30", "Level": "Information" },
+  { "EventId": 4648, "TimeCreated": "2026-01-06T16:00:30Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV03", "Account": "svc-migrator.demo", "SourceAddress": "192.0.2.30", "Level": "Information" },
+  { "EventId": 4648, "TimeCreated": "2026-01-06T16:01:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV04", "Account": "svc-migrator.demo", "SourceAddress": "192.0.2.30", "Level": "Information" },
+  { "EventId": 4648, "TimeCreated": "2026-01-06T16:01:30Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV05", "Account": "svc-migrator.demo", "SourceAddress": "192.0.2.30", "Level": "Information" },
+  { "EventId": 4648, "TimeCreated": "2026-01-06T16:02:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV06", "Account": "svc-migrator.demo", "SourceAddress": "192.0.2.30", "Level": "Information" },
+  { "EventId": 4648, "TimeCreated": "2026-01-06T16:02:30Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV07", "Account": "svc-migrator.demo", "SourceAddress": "192.0.2.30", "Level": "Information" },
+
+  { "EventId": 4624, "TimeCreated": "2026-01-06T09:10:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "traveler.demo", "SourceAddress": "203.0.113.80", "Level": "Information" },
+  { "EventId": 4624, "TimeCreated": "2026-01-06T09:15:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "traveler.demo", "SourceAddress": "198.51.100.90", "Level": "Information" },
+
+  { "EventId": 4624, "TimeCreated": "2026-01-06T09:00:00Z", "Provider": "Microsoft-Windows-Security-Auditing", "Computer": "APP-SRV01", "Account": "normal.user", "SourceAddress": "192.0.2.40", "Level": "Information" }
+]

@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{032F40CD-2360-4CA7-BB1C-475E7A315871}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvtLogTriage.Core", "src\EvtLogTriage.Core\EvtLogTriage.Core.csproj", "{446D53CB-126D-42C2-AEB6-02B528405666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvtLogTriage.Windows", "src\EvtLogTriage.Windows\EvtLogTriage.Windows.csproj", "{158B7314-BE13-4FFD-A348-9C3704F5E187}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvtLogTriage.Cli", "src\EvtLogTriage.Cli\EvtLogTriage.Cli.csproj", "{2539E985-DE02-4FEE-86C7-F032528588A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4DBDC53A-6949-4AA3-AB66-9AAFAF21B7C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvtLogTriage.Core.Tests", "tests\EvtLogTriage.Core.Tests\EvtLogTriage.Core.Tests.csproj", "{7CEDC89E-C437-4762-974D-EF7A9C154E15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{446D53CB-126D-42C2-AEB6-02B528405666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{446D53CB-126D-42C2-AEB6-02B528405666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{446D53CB-126D-42C2-AEB6-02B528405666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{446D53CB-126D-42C2-AEB6-02B528405666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{158B7314-BE13-4FFD-A348-9C3704F5E187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{158B7314-BE13-4FFD-A348-9C3704F5E187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{158B7314-BE13-4FFD-A348-9C3704F5E187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{158B7314-BE13-4FFD-A348-9C3704F5E187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2539E985-DE02-4FEE-86C7-F032528588A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2539E985-DE02-4FEE-86C7-F032528588A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2539E985-DE02-4FEE-86C7-F032528588A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2539E985-DE02-4FEE-86C7-F032528588A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CEDC89E-C437-4762-974D-EF7A9C154E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CEDC89E-C437-4762-974D-EF7A9C154E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CEDC89E-C437-4762-974D-EF7A9C154E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CEDC89E-C437-4762-974D-EF7A9C154E15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{446D53CB-126D-42C2-AEB6-02B528405666} = {032F40CD-2360-4CA7-BB1C-475E7A315871}
+		{158B7314-BE13-4FFD-A348-9C3704F5E187} = {032F40CD-2360-4CA7-BB1C-475E7A315871}
+		{2539E985-DE02-4FEE-86C7-F032528588A6} = {032F40CD-2360-4CA7-BB1C-475E7A315871}
+		{7CEDC89E-C437-4762-974D-EF7A9C154E15} = {4DBDC53A-6949-4AA3-AB66-9AAFAF21B7C2}
+	EndGlobalSection
+EndGlobal
