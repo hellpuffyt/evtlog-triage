@@ -12,6 +12,8 @@ internal static class SlidingWindow
     /// &lt;= <paramref name="window"/> containing at least <paramref name="threshold"/> events.
     /// The window is inclusive at both ends: an event exactly <paramref name="window"/> after the
     /// window's first event is still considered part of that window.
+    /// Once a window reaches the threshold it is extended to every later event still within
+    /// <paramref name="window"/> of its first event, so the burst reports the full volume.
     /// After a burst is emitted, scanning resumes strictly after it, so bursts never overlap.
     /// </summary>
     public static IEnumerable<IReadOnlyList<EventRecord>> FindBursts(
@@ -32,6 +34,15 @@ internal static class SlidingWindow
 
             if (right - left + 1 >= threshold)
             {
+                // Extend the burst over every later event that still falls inside the window that
+                // started at `left`, so one burst of 40 events is reported once with all 40 events
+                // rather than as four 10-event findings that each understate the volume.
+                while (right + 1 < sorted.Count &&
+                       sorted[right + 1].TimeCreated - sorted[left].TimeCreated <= window)
+                {
+                    right++;
+                }
+
                 yield return sorted.Skip(left).Take(right - left + 1).ToList();
                 left = right + 1;
             }

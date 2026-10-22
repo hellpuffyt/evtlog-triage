@@ -40,4 +40,16 @@ public sealed class EventRecord
 
     /// <summary>Convenience accessor for a Data field; returns null when absent.</summary>
     public string? GetData(string key) => Data.TryGetValue(key, out var value) ? value : null;
+
+    /// <summary>
+    /// Normalizes an account name or source address read from a log export. Windows writes
+    /// <c>-</c> when a field has no value (for example <c>IpAddress</c> on a local 4625), so
+    /// <c>-</c>, empty and whitespace-only values become <c>null</c> instead of a shared
+    /// placeholder that would merge unrelated events into one group.
+    /// </summary>
+    public static string? NormalizeIdentity(string? value)
+    {
+        var trimmed = value?.Trim();
+        return string.IsNullOrEmpty(trimmed) || trimmed == "-" ? null : trimmed;
+    }
 }

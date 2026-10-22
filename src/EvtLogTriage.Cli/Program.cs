@@ -70,7 +70,8 @@ public static class Program
 
             return worstSeverity >= parsed.FailOnSeverity ? 1 : 0;
         }
-        catch (Exception ex) when (ex is InvalidDataException or FormatException)
+        catch (Exception ex) when (ex is InvalidDataException or FormatException or ArgumentException
+                                       or IOException or UnauthorizedAccessException)
         {
             Console.Error.WriteLine($"error: {ex.Message}");
             return 2;

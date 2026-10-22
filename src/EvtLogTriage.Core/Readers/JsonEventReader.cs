@@ -23,26 +23,51 @@ public sealed class JsonEventReader : IEventReader
         { "Account", "TargetUserName", "SubjectUserName", "UserId", "AccountName" };
     private static readonly string[] SourceAddressKeys =
         { "SourceAddress", "IpAddress", "SourceNetworkAddress", "IpAddr" };
+    private static readonly char[] OffsetSigns = { '+', '-' };
     private static readonly string[] LevelKeys = { "LevelDisplayName", "Level" };
 
     public IReadOnlyList<EventRecord> Read(TextReader input)
     {
-        using var doc = JsonDocument.Parse(input.ReadToEnd());
-        var results = new List<EventRecord>();
-
-        if (doc.RootElement.ValueKind == JsonValueKind.Array)
+        JsonDocument doc;
+        try
         {
-            foreach (var element in doc.RootElement.EnumerateArray())
+            doc = JsonDocument.Parse(input.ReadToEnd());
+        }
+        catch (JsonException ex)
+        {
+            throw new InvalidDataException($"Input is not valid JSON: {ex.Message}", ex);
+        }
+
+        using (doc)
+        {
+            var results = new List<EventRecord>();
+            if (doc.RootElement.ValueKind == JsonValueKind.Array)
             {
-                results.Add(ParseRecord(element));
-            }
-        }
-        else
-        {
-            results.Add(ParseRecord(doc.RootElement));
-        }
+                var index = 0;
+                foreach (var element in doc.RootElement.EnumerateArray())
+                {
+                    index++;
+                    if (element.ValueKind != JsonValueKind.Object)
+                    {
+                        throw new InvalidDataException(
+                            $"Event {index} in the JSON array is a {element.ValueKind}, not an object.");
+                    }
 
-        return results;
+                    results.Add(ParseRecord(element));
+                }
+            }
+            else if (doc.RootElement.ValueKind == JsonValueKind.Object)
+            {
+                results.Add(ParseRecord(doc.RootElement));
+            }
+            else
+            {
+                throw new InvalidDataException(
+                    $"Expected a JSON array of events or a single event object, got a {doc.RootElement.ValueKind}.");
+            }
+
+            return results;
+        }
     }
 
     private static EventRecord ParseRecord(JsonElement element)
@@ -94,8 +119,8 @@ public sealed class JsonEventReader : IEventReader
             TimeCreated = time,
             Provider = GetString(element, ProviderKeys) ?? string.Empty,
             Computer = GetString(element, ComputerKeys) ?? string.Empty,
-            Account = GetString(element, AccountKeys),
-            SourceAddress = GetString(element, SourceAddressKeys),
+            Account = EventRecord.NormalizeIdentity(GetString(element, AccountKeys)),
+            SourceAddress = EventRecord.NormalizeIdentity(GetString(element, SourceAddressKeys)),
             Level = GetString(element, LevelKeys) ?? "Information",
             Data = data,
         };
@@ -129,8 +154,12 @@ public sealed class JsonEventReader : IEventReader
         return false;
     }
 
+    // Objects and arrays are not a usable name: Get-WinEvent's UserId, for example, serializes as a
+    // SID object, which used to become the "account" as raw JSON text.
     private static string? GetString(JsonElement element, string[] keys) =>
-        TryFind(element, keys, out var value) ? ValueToString(value) : null;
+        TryFind(element, keys, out var value) && value.ValueKind is not (JsonValueKind.Object or JsonValueKind.Array)
+            ? ValueToString(value)
+            : null;
 
     private static int? GetInt(JsonElement element, string[] keys)
     {
@@ -141,7 +170,9 @@ public sealed class JsonEventReader : IEventReader
 
         return value.ValueKind switch
         {
-            JsonValueKind.Number => value.GetInt32(),
+            JsonValueKind.Number when value.TryGetInt32(out var number) => number,
+            JsonValueKind.Number => throw new InvalidDataException(
+                $"Event ID {value.GetRawText()} is not a 32-bit integer."),
             JsonValueKind.String when int.TryParse(value.GetString(), out var parsed) => parsed,
             _ => null,
         };
@@ -164,11 +195,25 @@ public sealed class JsonEventReader : IEventReader
         // when using older PowerShell defaults; support both that and ISO 8601.
         if (raw.StartsWith("/Date(", StringComparison.Ordinal))
         {
-            var digits = raw["/Date(".Length..raw.IndexOf(')')];
-            if (long.TryParse(digits, out var millis))
+            var close = raw.IndexOf(')', StringComparison.Ordinal);
+            if (close < 0)
             {
-                return DateTimeOffset.FromUnixTimeMilliseconds(millis);
+                return null;
             }
+
+            // The body may carry a "+0100"-style suffix after the milliseconds; it does not change
+            // the instant, which is always UTC milliseconds since the epoch.
+            var digits = raw["/Date(".Length..close];
+            var suffix = digits.IndexOfAny(OffsetSigns, 1);
+            if (suffix > 0)
+            {
+                digits = digits[..suffix];
+            }
+
+            return long.TryParse(digits, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var millis) &&
+                   millis >= -62135596800000 && millis <= 253402300799999
+                ? DateTimeOffset.FromUnixTimeMilliseconds(millis)
+                : null;
         }
 
         return DateTimeOffset.TryParse(

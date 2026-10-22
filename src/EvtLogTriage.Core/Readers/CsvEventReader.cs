@@ -27,10 +27,18 @@ public sealed class CsvEventReader : IEventReader
             return Array.Empty<EventRecord>();
         }
 
-        var header = rows[0];
-        var results = new List<EventRecord>(rows.Count - 1);
+        // Windows PowerShell 5.1's Export-Csv writes a "#TYPE <type name>" line before the header
+        // unless -NoTypeInformation is given; skip it.
+        var headerIndex = rows[0].Count > 0 && rows[0][0].StartsWith("#TYPE", StringComparison.Ordinal) ? 1 : 0;
+        if (headerIndex >= rows.Count)
+        {
+            return Array.Empty<EventRecord>();
+        }
 
-        for (var r = 1; r < rows.Count; r++)
+        var header = rows[headerIndex];
+        var results = new List<EventRecord>(rows.Count - 1 - headerIndex);
+
+        for (var r = headerIndex + 1; r < rows.Count; r++)
         {
             var row = rows[r];
             var byColumn = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -66,8 +74,8 @@ public sealed class CsvEventReader : IEventReader
                 TimeCreated = time,
                 Provider = byColumn.GetValueOrDefault("Provider", string.Empty),
                 Computer = byColumn.GetValueOrDefault("Computer", string.Empty),
-                Account = byColumn.GetValueOrDefault("Account"),
-                SourceAddress = byColumn.GetValueOrDefault("SourceAddress"),
+                Account = EventRecord.NormalizeIdentity(byColumn.GetValueOrDefault("Account")),
+                SourceAddress = EventRecord.NormalizeIdentity(byColumn.GetValueOrDefault("SourceAddress")),
                 Level = byColumn.GetValueOrDefault("Level", "Information"),
                 Data = data,
             });
