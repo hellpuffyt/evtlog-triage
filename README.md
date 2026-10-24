@@ -92,7 +92,7 @@ Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0). The
 `DOTNET_ROLL_FORWARD=Major` set in the environment.
 
 ```
-git clone <this-repo>
+git clone https://github.com/hellpuffyt/evtlog-triage.git
 cd evtlog-triage
 dotnet build -c Release
 ```
